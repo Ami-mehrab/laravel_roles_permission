@@ -17,9 +17,9 @@
                 <h1 class="text-lg font-semibold">Edit Permission</h1>
             </div>
             <div class="p-6">
-                <form action="{{ route('permissions.update',$permission->id) }}" method="POST" id="permissionForm">
+                <form action="{{ route('permissions.update',$permission->id) }}" method="Post" id="permissionForm">
                     @csrf
-                        @method('PUT')
+                    @method('PUT')
                     <div class="mb-5">
                         <label for="permissionName" class="block mb-2 font-medium text-gray-700">Permission Name *</label>
                         <input type="text" name="name" value="{{old('name',$permission->name)}}" id="permissionName"
@@ -55,4 +55,7 @@
             }
         });
     </script>
+
+
+
 </x-app-layout>

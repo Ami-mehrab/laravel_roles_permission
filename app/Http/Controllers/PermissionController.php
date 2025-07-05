@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Faker\Provider\ar_EG\Person;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Permission;
@@ -77,12 +78,35 @@ class PermissionController extends Controller
     }
 }
 
+//if we use ajax and retun json
+public function destroy(Request $request){
 
- public function delete(){
+    $id=$request->id;
+
+   $permission= Permission::find($id);
 
 
-        
-    }
+   if($permission==null){
+    session()->flash('error','permission not found');
+    return response()->json([
+                                            //used ajax 
+        'status'=>false   
+    ]);
+
+   }
+
+   $permission->delete();
+
+   session()->flash('success','permission deleted');
+   return response()->json([
+                                        
+       'status'=>true  
+   ]);
+
+
+}
+
+
 }
 
 
