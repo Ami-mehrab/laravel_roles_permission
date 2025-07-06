@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex items-center justify-between">
             <h2 class="text-xl font-semibold text-gray-800 leading-tight">
-                Roles/Create
+                Roles/edit
             </h2>
             <a href="{{ route('roles.index') }}"
                 class="px-4 py-2 text-sm text-white bg-slate-700 rounded-md hover:bg-slate-800">
@@ -14,18 +14,18 @@
     <div class="max-w-3xl mx-auto mt-10">
         <div class="bg-white shadow-md rounded-lg overflow-hidden">
             <div class="bg-blue-600 px-6 py-4 text-white">
-                <h1 class="text-lg font-semibold">Create New Roles</h1>
+                <h1 class="text-lg font-semibold">Update Roles</h1>
             </div>
             <div class="p-6">
-                <form action="{{Route('roles.store')}}" method="post" id="">
-
+                <form action="{{Route('roles.update',$role->id)}}" method="post" id="">
                     @csrf
+                    @method('PUT')
 
                     <div class="mb-5">
                         <label for="permissionName" class="block mb-2 font-medium text-gray-700">Role Name *</label>
                         <input type="text" name="name" id="permissionName"
                             class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            placeholder="Enter Role name" required>
+                            placeholder="Enter Role name" value="{{old('name',$role->name)}}" required>
                         <p id="nameError" class="mt-1 text-sm text-red-500 hidden">Role name is required.</p>
                     </div>
 
@@ -39,7 +39,8 @@
                         <div class="space-y-2">
                             @foreach($permissions as $permission)
                             <label class="flex items-center">
-                                <input type="checkbox" name="permission[]" value="{{ $permission->name }}" class="form-checkbox h-4 w-4 text-blue-600">
+                                <input {{($haspermissions->contains($permission->name)) ? 'checked':''}}   
+                                type="checkbox" name="permission[]" value="{{ $permission->name }}" class="form-checkbox h-4 w-4 text-blue-600">
                                 <span class="ml-2 text-gray-700">{{ $permission->name }}</span>
                             </label>
                             @endforeach
@@ -52,8 +53,8 @@
 
                     <div class="flex justify-end mt-6">
                         <button type="submit"
-                            class="px-6 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 transition duration-200">
-                            Submit
+                                class="px-6 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 transition duration-200 hover:bg-slate-600">
+                            Update
                         </button>
                     </div>
                 </form>

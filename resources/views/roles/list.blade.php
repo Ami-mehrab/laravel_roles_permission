@@ -46,7 +46,8 @@
                         <td>{{ $role->permissions->pluck('name')->implode(',')}}</td>
                         <td>{{ $role->created_at->format('F j, Y') }}</td>
                         <td>
-
+                        <a href="javascript:void(0);" onclick="deleteRole({{ $role->id }})" class="btn btn-danger btn-sm me-1">Delete</a>
+                        <a href="{{ route('roles.edit', $role->id) }}" class="btn btn-warning btn-sm me-1">Edit</a>
                         </td>
                     </tr>
                     @endforeach
@@ -63,10 +64,10 @@
 
     <x-slot name="script">
         <script type="text/javascript">
-            function deletepermission(id) {
+            function deleteRole(id) {
                 if (confirm("Are you sure you want to delete?")) {
                     $.ajax({
-                        url: '{{ route("permissions.destroy") }}',
+                        url: '{{ route("roles.destroy") }}',
                         type: 'delete',
                         data: {
                             id: id
@@ -76,7 +77,7 @@
                             'x-csrf-token': '{{ csrf_token() }}'
                         },
                         success: function(response) {
-                            window.location.href = '{{ route("permissions.index") }}';
+                            window.location.href = '{{ route("roles.index") }}';
                         }
                     });
                 }
