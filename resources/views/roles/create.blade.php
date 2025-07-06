@@ -19,7 +19,7 @@
             <div class="p-6">
                 <form action="{{Route('roles.store')}}" method="post" id="">
 
-                @csrf
+                    @csrf
 
                     <div class="mb-5">
                         <label for="permissionName" class="block mb-2 font-medium text-gray-700">Role Name *</label>
@@ -31,7 +31,6 @@
 
 
                     <!-- form dynamic in create blade  -->
-
                     <div class="mb-6">
                         <label class="block text-gray-700 text-sm font-bold mb-2">
                             Select Options
@@ -40,11 +39,11 @@
                         <div class="space-y-2">
                             @foreach($permissions as $permission)
                             <label class="flex items-center">
-                                <input type="checkbox" name="permission[]" value="{{$permission->name}}" class="form-checkbox h-4 w-4 text-blue-600">
-                                <span class="ml-2 text-gray-700">{{$permission->name}}</span>
+                                <input type="checkbox" name="permission[]" value="{{ $permission->name }}" class="form-checkbox h-4 w-4 text-blue-600">
+                                <span class="ml-2 text-gray-700">{{ $permission->name }}</span>
                             </label>
+                            @endforeach
                         </div>
-                        @endforeach
 
                         @error('options')
                         <p class="text-red-500 text-xs italic mt-2">{{ $message }}</p>
