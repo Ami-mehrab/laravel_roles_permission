@@ -22,6 +22,9 @@
 
     <body>
         <x-message></x-message>
+          @if($roles->isEmpty())
+            <h3> No Role  Created</h3>
+            @else
 
         <div class="container mt-5">
             <h2 class="mb-4 text-center">Role Listing</h2>
@@ -55,6 +58,7 @@
             </table>
 
             {{$roles->links()}}
+            @endif
         </div>
 
 

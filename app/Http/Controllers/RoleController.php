@@ -68,7 +68,7 @@ class RoleController extends Controller
 
         $role = Role::findorFail($id);
 
-        $haspermissions = $role->permissions->pluck('name');  //assigned permiision name to a role
+        $haspermissions = $role->permissions->pluck('name');  //assigned permission name to a role
         $permissions = Permission::orderBy('name', 'ASC')->get(); // Those permissions list already created
 
 

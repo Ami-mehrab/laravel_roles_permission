@@ -11,12 +11,12 @@ class ArticleController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index() {
+    public function index()
+    {
 
-        $articles=Article::latest()->paginate(5);     //latest -orderBy created at descending
+        $articles = Article::latest()->paginate(5);     //latest -orderBy created at descending
 
-        return view('articles.list',compact('articles'));
-
+        return view('articles.list', compact('articles'));
     }
 
     /**
@@ -36,7 +36,7 @@ class ArticleController extends Controller
 
             'title' => 'required|min:5',
             'text' => 'nullable|string|max:255',
-            'author' => 'required||min:3'
+            'author' => 'required|min:3',
 
         ]);
 
@@ -45,8 +45,8 @@ class ArticleController extends Controller
             Article::create([
 
                 "title" => $request->title,
-                "text" => $request->title,
-                "author" => $request->title
+                "text" => $request->text,
+                "author" => $request->author
 
 
             ]);
@@ -68,8 +68,10 @@ class ArticleController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
+
     {
-        //
+        $articles = Article::findorFail($id);
+        return view('articles.edit', compact('articles'));
     }
 
     /**
@@ -77,14 +79,49 @@ class ArticleController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+
+        $article = Article::findorFail($id);
+        $validator = Validator::make($request->all(), [
+
+          'title' => 'required|unique:articles,title,' . $id,
+            'text' => 'nullable|string|max:255',
+            'author' => 'required|min:3'
+        ]);
+
+        if ($validator->passes()) {
+
+           $article->title = $request->title;
+            $article->text = $request->text;
+            $article->author = $request->author;
+            $article->save();
+
+
+            return redirect()->route('articles.index')->with('success', 'Article updated successfully');
+        } else {
+            return redirect()->route('articles.edit', $id)->withInput()->withErrors($validator);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
-        //
+        $article=Article::find($request->id);
+        if (!empty($article==null)){
+
+             session()->flash('error','Article not found');
+            return response()->json([
+
+                'status'=>false
+            ]);
+        }
+             $article->delete();
+
+            session()->flash('success','Article deleted successfully');
+             return response()->json([
+
+                'status'=>true
+             ]);
     }
 }

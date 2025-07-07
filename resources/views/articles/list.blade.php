@@ -47,7 +47,9 @@
                         <td>{{ $article->author }}</td>
                         <td>{{ $article->created_at->format('F j, Y') }}</td>
                         <td>
-                           
+                        <a href="javascript:void(0);" onclick="deleteArticle({{$article->id}})" class="btn btn-danger btn-sm me-1">Delete</a>
+                        <a href="{{ route('articles.edit', $article->id) }}" class="btn btn-warning btn-sm me-1">Edit</a>
+                        </td>
                         </td>
                     </tr>
                     @endforeach
@@ -65,10 +67,10 @@
 
     <x-slot name="script">
         <script type="text/javascript">
-            function deletepermission(id) {
+            function deleteArticle(id) {
                 if (confirm("Are you sure you want to delete?")) {
                     $.ajax({
-                        url: '{{ route("permissions.destroy") }}',
+                        url: '{{ route("articles.destroy") }}',
                         type: 'delete',
                         data: {
                             id: id
@@ -78,7 +80,7 @@
                             'x-csrf-token': '{{ csrf_token() }}'
                         },
                         success: function(response) {
-                            window.location.href = '{{ route("permissions.index") }}';
+                            window.location.href = '{{ route("articles.index") }}';
                         }
                     });
                 }
