@@ -4,6 +4,12 @@
             <h2 class="text-xl font-semibold text-gray-800 leading-tight">
                 User/List
             </h2>
+            <!-- @can(create users)
+              <a href="{{ route('users.create') }}"
+                class="px-4 py-2 text-sm text-white bg-slate-700 rounded-md hover:bg-slate-800">
+                Create
+            </a>
+            @endcan -->
         </div>
     </x-slot>
 
@@ -45,7 +51,10 @@
                          <td>{{ $user->roles->pluck('name')->implode(',')}}</td>
                         <td>{{ $user->created_at->format('F j, Y') }}</td>
                         <td>
+
+                        @can(edit users)
                          <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning btn-sm me-1">Edit</a>
+                         @endcan
                         </td>
                     </tr>
                     @endforeach

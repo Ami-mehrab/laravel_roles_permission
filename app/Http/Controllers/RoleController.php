@@ -8,13 +8,24 @@ use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
+
 {
+    // implementing middleware ,we must change basecontroller for laravel 12.
+    public function __construct()
+    {
+        $this->middleware('permission:view roles')->only('index');
+        $this->middleware('permission:edit roles')->only('edit', 'update');
+        $this->middleware('permission:create roles')->only('create', 'store');
+        $this->middleware('permission:delete roles')->only('destroy');
+    }
+
     public function index()
     {
 
-        $roles = Role::orderBy('name', 'ASC')->paginate(5);
+        $roles = Role::orderBy('name', 'ASC')->paginate(10);
 
         return view('roles.list', compact('roles'));
+
     }
 
     public function create()

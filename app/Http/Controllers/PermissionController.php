@@ -9,12 +9,19 @@ use Spatie\Permission\Models\Permission;
 
 class PermissionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:view permissions')->only('index');
+        $this->middleware('permission:edit permissions')->only('edit', 'update');
+        $this->middleware('permission:create permissions')->only('create', 'store');
+        $this->middleware('permission:delete permissions')->only('destroy');
+    }
 
     
     public function index(){
 
 
-        $permissions=Permission::orderBy('created_at','DESC')->paginate(5);
+        $permissions=Permission::orderBy('created_at','DESC')->paginate(10);
         return view('permissions.list',compact('permissions'));
     }
 
