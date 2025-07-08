@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Role;
 
+
 class UserController extends Controller
 {
      public function __construct()
@@ -23,6 +24,7 @@ class UserController extends Controller
      */
     public function index()
     {
+
         $users = User::latest()->paginate(5);
         return view('users.list', compact('users'));
     }
@@ -138,4 +140,29 @@ class UserController extends Controller
    ]);
 
     }
+
+   public function search(Request $request)
+{
+    $query = User::with('roles');
+
+    if ($request->filled('name')) {
+        $query->where('name', 'like', '%' . $request->name . '%');
+    }
+
+    if ($request->filled('email')) {
+        $query->where('email', 'like', '%' . $request->email . '%');
+    }
+
+    if ($request->filled('role')) {
+        $query->whereHas('roles', function ($q) use ($request) {
+            $q->where('name', $request->role);
+        });
+    }
+
+    $users = $query->paginate(10)->withQueryString();
+    $allRoles = Role::all(); // Fetch roles for dropdown
+
+    return view('users.list', compact('users', 'allRoles'));
+}
+
 }

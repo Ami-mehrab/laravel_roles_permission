@@ -55,7 +55,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/users', [UserController::class, 'store'])->name('users.store');
     Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
     Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update');
- Route::delete('/users', [UserController::class, 'destroy'])->name('users.destroy');
+    Route::delete('/users', [UserController::class, 'destroy'])->name('users.destroy');
+
+    //search by name,email,role
+    Route::get('/search/list', [UserController::class, 'search'])->name('users.search');
+
 });
 
 
