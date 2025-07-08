@@ -4,19 +4,17 @@
             <h2 class="text-xl font-semibold text-gray-800 leading-tight">
                 User/List
             </h2>
-            <!-- @can(create users)
-              <a href="{{ route('users.create') }}"
+                @can('create users')
+                 <a href="{{ route('users.create') }}"
                 class="px-4 py-2 text-sm text-white bg-slate-700 rounded-md hover:bg-slate-800">
                 Create
             </a>
-            @endcan -->
+            @endcan
         </div>
     </x-slot>
 
     <head>
         <title>Users </title>
-
-
 
         <!-- Bootstrap CDN -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -51,10 +49,12 @@
                          <td>{{ $user->roles->pluck('name')->implode(',')}}</td>
                         <td>{{ $user->created_at->format('F j, Y') }}</td>
                         <td>
-
-                        @can(edit users)
-                         <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning btn-sm me-1">Edit</a>
+                        @can('delete users')
+                         <a href="javascript:void(0);" onclick="deleteUser({{$user->id}})" class="btn btn-danger btn-sm me-1">Delete</a>
                          @endcan
+                          @can('edit users')
+                           <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning btn-sm me-1">Edit</a>
+                      @endcan
                         </td>
                     </tr>
                     @endforeach
@@ -69,9 +69,28 @@
         <!-- Bootstrap JS (optional, for interactive elements) -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     </body>
-
-    <x-slot name="script">
-
+     <x-slot name="script">
+        <script type="text/javascript">
+            function deleteUser(id) {
+                if (confirm("Are you sure you want to delete?")) {
+                    $.ajax({
+                        url: '{{ route("users.destroy") }}',
+                        type: 'delete',
+                        data: {
+                            id: id
+                        },
+                        dataType: 'json',
+                        headers: {
+                            'x-csrf-token': '{{ csrf_token() }}'
+                        },
+                        success: function(response) {
+                            window.location.href = '{{ route("users.index") }}';
+                        }
+                    });
+                }
+            }
+        </script>
+    
     </x-slot>
 
 </x-app-layout>

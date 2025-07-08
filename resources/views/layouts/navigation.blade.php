@@ -15,27 +15,28 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         Dashboard
                     </x-nav-link>
-                    @can('view permissions')
+                  @can('view permissions')
                     <x-nav-link :href="route('permissions.index')" :active="request()->routeIs('permissions.index')">
-                        {{ __('Permission') }}
+                        {{ __('Permissions') }}
                     </x-nav-link>
-                    @endcan
-                    @can('view roles')
+                   @endcan
+                      @can('view roles')
                     <x-nav-link :href="route('roles.index')" :active="request()->routeIs('roles.index')">
                         {{ __('Roles') }}
                     </x-nav-link>
                      @endcan
-                       @can('view articles')
+                         @can('view articles')
                     <x-nav-link :href="route('articles.index')" :active="request()->routeIs('articles.index')">
                         {{ __('Articles') }}
                     </x-nav-link>
-                      @endcan
+                     @endcan
                       
-                       @can('view users')
+                        @can('view users')
                        <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
                         {{ __('Users') }}
                     </x-nav-link>
-                        @endcan
+                    @endcan
+                   
                     
                 </div>
             </div>
@@ -45,7 +46,7 @@
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                            <div>{{ Auth::user()->name }}</div>
+                            <div>{{ Auth::user()->name }} ({{ Auth::user()->roles->pluck('name')->implode(', ')}})</div>
                             <div class="ms-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />

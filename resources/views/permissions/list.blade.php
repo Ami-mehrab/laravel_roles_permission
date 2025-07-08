@@ -46,14 +46,13 @@
                         <td>{{ $permission->created_at->format('F j, Y') }}</td>
                         <td>
 
-                        @can('delete permissions')
+                        
                             <a href="javascript:void(0);" onclick="deletepermission({{ $permission->id }})" class="btn btn-danger btn-sm me-1">Delete</a>
-                          @endcan
-                            
-                          @can('edit permissions')
+                       
+                        
                             
                              <a href="{{ route('permissions.edit', $permission->id) }}" class="btn btn-warning btn-sm me-1">Edit</a>
-                              @endcan
+                            
                         </td>
 
                     </tr>

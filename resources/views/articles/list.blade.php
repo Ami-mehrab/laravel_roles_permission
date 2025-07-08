@@ -48,14 +48,12 @@
                         <td>{{ $article->created_at->format('F j, Y') }}</td>
                         <td>
                              <!-- using can method it will only visible to allowed roles -->
-                        @can ('delete articles') 
+                   
                         <a href="javascript:void(0);" onclick="deleteArticle({{$article->id}})" class="btn btn-danger btn-sm me-1">Delete</a>
 
-                        @endcan 
-
-                         @can ('edit articles')
+                        
                         <a href="{{ route('articles.edit', $article->id) }}" class="btn btn-warning btn-sm me-1">Edit</a>
-                         @endcan
+                     
                        
                         </td>
                         </td>
@@ -64,7 +62,7 @@
                 </tbody>
             </table>
 
-            {{$articles->links() }}
+            {{$articles->links()}}
             @endif
 
         </div>

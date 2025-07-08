@@ -9,11 +9,13 @@ use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
-    //  public function __construct()
-    // {
-    //     $this->middleware('permission:view users')->only('index');
-    //     $this->middleware('permission:edit users')->only('edit', 'update');
-    // }
+     public function __construct()
+    {
+        $this->middleware('permission:view users')->only('index');
+        $this->middleware('permission:edit users')->only('edit', 'update');
+        $this->middleware('permission:create users')->only('create', 'store');
+        $this->middleware('permission:delete users')->only('delete');
+    }
 
     
     /**
@@ -30,7 +32,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('users.create');
     }
 
     /**
@@ -38,7 +40,27 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         $validator = Validator::make($request->all(), [
+           'name'     => 'required|string|max:255',
+            'email'    => 'required|email|unique:users,email',
+            'password' => 'required|min:6|confirmed',
+        ]);
+
+        if ($validator->passes()) {
+
+            
+            User::create([
+
+                "name"=>$request->name ,    
+                "email"=>$request->email, 
+                "password"=>$request->password ,     
+
+            ]);
+           
+            return redirect()->route('users.index')->with('success', 'An user created');
+        } else {
+            return redirect()->route('users.create')->withInput()->withErrors($validator);
+        }
     }
 
     /**
@@ -91,8 +113,29 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
-        //
+          $id=$request->id;
+
+   $user= User::find($id);
+
+
+   if($user==null){
+    session()->flash('error','user not found');
+    return response()->json([
+                                            //used ajax 
+        'status'=>false   
+    ]);
+
+   }
+
+   $user->delete();
+
+   session()->flash('success','user deleted');
+   return response()->json([
+                                        
+       'status'=>true  
+   ]);
+
     }
 }

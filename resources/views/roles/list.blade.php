@@ -50,12 +50,12 @@
                         <td>{{ $role->created_at->format('F j, Y') }}</td>
                         <td>
 
-                        @can ('delete roles')
+                     
                         <a href="javascript:void(0);" onclick="deleteRole({{$role->id}})" class="btn btn-danger btn-sm me-1">Delete</a>
-                        @endcan
-                          @can ('edit roles')
+                      
+                        
                         <a href="{{ route('roles.edit', $role->id) }}" class="btn btn-warning btn-sm me-1">Edit</a>
-                        @endcan
+                       
 
                        
                         </td>

@@ -36,6 +36,15 @@ class ArticleController extends Controller
         ]);
 
         if ($validator->passes()) {
+
+            
+            Article::create([
+
+                "title"=>$request->title ,    
+                "text"=>$request->text, 
+                "author"=>$request->author ,     
+
+            ]);
             // Article::create($request->only(['title', 'text', 'author']));
             return redirect()->route('articles.index')->with('success', 'An Article added');
         } else {
@@ -72,10 +81,28 @@ class ArticleController extends Controller
         }
     }
 
-    public function destroy(Article $article)
-    {
-        $article->delete();
-        session()->flash('success', 'Article deleted successfully');
-        return response()->json(['status' => true]);
-    }
+    public function destroy(Request $request){
+    $id=$request->id;
+
+   $article= Article::find($id);
+
+
+   if($article==null){
+    session()->flash('error','article not found');
+    return response()->json([
+                                            //used ajax 
+        'status'=>false   
+    ]);
+
+   }
+
+   $article->delete();
+
+   session()->flash('success','article  deleted');
+   return response()->json([
+                                        
+       'status'=>true  
+   ]);
+
+}
 }
