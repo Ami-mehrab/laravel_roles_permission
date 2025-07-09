@@ -26,7 +26,8 @@ class UserController extends Controller
     {
 
         $users = User::latest()->paginate(5);
-        return view('users.list', compact('users'));
+      $allRoles = Role::all(); // Fetch roles for dropdown
+        return view('users.list', compact('users','allRoles'));
     }
 
     /**
@@ -144,6 +145,7 @@ class UserController extends Controller
    public function search(Request $request)
 {
     $query = User::with('roles');
+    
 
     if ($request->filled('name')) {
         $query->where('name', 'like', '%' . $request->name . '%');
@@ -160,7 +162,6 @@ class UserController extends Controller
     }
 
     $users = $query->paginate(10)->withQueryString();
-    $allRoles = Role::all(); // Fetch roles for dropdown
 
     return view('users.list', compact('users', 'allRoles'));
 }
