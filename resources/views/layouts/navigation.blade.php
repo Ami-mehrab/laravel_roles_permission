@@ -36,10 +36,11 @@
                         {{ __('Users') }}
                     </x-nav-link>
                     @endcan
-
+                @can('view jobs')
                     <x-nav-link :href="route('jobs.index')" :active="request()->routeIs('employer.jobs.index')">
                         {{ __('Jobs') }}
                     </x-nav-link>
+                    @endcan
 
 
 

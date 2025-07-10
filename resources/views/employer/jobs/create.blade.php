@@ -61,8 +61,9 @@
             <label class="form-label">Salary</label>
             <input type="text" name="salary" class="form-control" value="{{ old('salary') }}">
         </div>
-
+        @can('create jobs')
         <button type="submit" class="btn btn-primary">Post Job</button>
+        @endcan
         <a href="{{ route('jobs.index') }}" class="btn btn-secondary">Back</a>
     </form>
 </div>

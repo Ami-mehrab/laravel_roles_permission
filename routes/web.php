@@ -61,9 +61,7 @@ Route::middleware('auth')->group(function () {
     //search by name,email,role
     Route::get('/search/list', [UserController::class, 'search'])->name('users.search');
 
-
-    //route for posting job
-
+    //route for posting job-employer
 
     Route::get('/jobs/list', [JobController::class, 'index'])->name('jobs.index');
     Route::get('/jobs/create', [JobController::class, 'create'])->name('jobs.create');
@@ -71,6 +69,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/jobs/{id}/edit', [JobController::class, 'edit'])->name('jobs.edit');
     Route::put('/jobs/{id}', [JobController::class, 'update'])->name('jobs.update');
     Route::delete('/jobs/{id}', [JobController::class, 'destroy'])->name('jobs.destroy');
+
+
+    //route for view job -candidate
+    Route::get('/jobs/{id}', [JobController::class, 'show'])->name('jobs.show');
+    
 });
 
 

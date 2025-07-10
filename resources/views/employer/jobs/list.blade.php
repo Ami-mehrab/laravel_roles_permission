@@ -14,9 +14,9 @@
         @if (session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
         @endif
-
+        @can('create jobs')
         <a href="{{ route('jobs.create') }}" class="btn btn-success mb-3">+ New Job Post</a>
-
+        @endcan
         <div class="table-responsive">
             <table class="table table-bordered table-striped">
                 <thead class="table-light">
@@ -24,6 +24,7 @@
                         <th>Title</th>
                         <th>Category</th>
                         <th>Salary</th>
+                        <th>Created By</th>
                         <th>Posted At</th>
                         <th>Action</th>
                     </tr>
@@ -34,22 +35,25 @@
                         <td>{{ $job->job_title }}</td>
                         <td>{{ $job->job_category }}</td>
                         <td>{{ $job->salary ?? 'N/A' }}</td>
+                        <td>{{ $job->created_by_name ?? 'Unknown' }} (ID: {{ $job->created_by_id ?? 'N/A' }})</td>
                         <td>{{ $job->created_at->format('F j, Y') }}</td>
-                        <td>
-
 
                         <td>
+                            @role('Candidate')
+                            <a href="{{ route('jobs.show', $job->id) }}" class="btn btn-info btn-sm me-1">View</a>
+                            @endrole
                             <form action="{{ route('jobs.destroy', $job->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this job?');">
                                 @csrf
                                 @method('DELETE')
+
+                                @can('delete jobs')
                                 <button type="submit" class="btn btn-danger btn-sm me-1">Delete</button>
+                                @endcan
                             </form>
-
+                            
+                            @can('edit jobs')
                             <a href="{{ route('jobs.edit', $job->id) }}" class="btn btn-warning btn-sm me-1">Edit</a>
-                        </td>
-
-
-                        </td>
+                            @endcan
                     </tr>
                     @endforeach
 

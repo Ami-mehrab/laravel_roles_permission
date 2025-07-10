@@ -55,8 +55,7 @@
                       
                         
                         <a href="{{ route('roles.edit', $role->id) }}" class="btn btn-warning btn-sm me-1">Edit</a>
-                       
-
+                                   
                        
                         </td>
                     </tr>

@@ -6,15 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class MyJob extends Model
 {
-      protected $fillable = [
-        'employer_id',
-        'job_category',
-        'job_title',
-        'job_description',
-        'key_responsibilities',
-        'skill_requirement',
-        'educational_requirements',
-        'experience_requirements',
-        'salary',
-    ];
+  protected $fillable = [
+    'employer_id',
+    'job_category',
+    'job_title',
+    'job_description',
+    'key_responsibilities',
+    'skill_requirement',
+    'educational_requirements',
+    'experience_requirements',
+    'salary',
+    'created_by_id',
+    'created_by_name',
+    'employer_id',
+  ];
 }

@@ -41,6 +41,8 @@ class DatabaseSeeder extends Seeder
                 'password' => bcrypt('123456789'),
             ]
         );
+        Role::firstOrCreate(['name' => 'Employer']);
+        Role::firstOrCreate(['name' => 'Candidate']);
  
         // Assign role to user
         $user->assignRole($superAdminRole);
