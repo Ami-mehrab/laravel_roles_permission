@@ -38,23 +38,23 @@
                     </div>
  
                     <div>
-                        <span class="font-semibold">Job Level:</span>
-                        <div class="capitalize">{{ $job->job_level ?? 'N/A' }}</div>
+                        <span class="font-semibold">Key Responsibilities</span>
+                        <div class="capitalize">{{ $job->key_responsibilities ?? 'N/A' }}</div>
                     </div>
  
                     <div>
                         <span class="font-semibold">Salary Range:</span>
-                        <div>{{ $job->salary_range ?? 'N/A' }}</div>
+                        <div>{{ $job->salary ?? 'N/A' }}</div>
                     </div>
  
                     <div>
                         <span class="font-semibold">Experience Required:</span>
-                        <div>{{ $job->experience_required ? $job->experience_required . ' year(s)' : 'Not specified' }}</div>
+                        <div>{{ $job->experience_requirements ? $job->experience_requirements . ' year(s)' : 'Not specified' }}</div>
                     </div>
  
                     <div>
                         <span class="font-semibold">Education Level:</span>
-                        <div>{{ $job->education_level ?? 'N/A' }}</div>
+                        <div>{{ $job->educational_requirements ?? 'N/A' }}</div>
                     </div>
  
                     <div>
@@ -65,8 +65,8 @@
                     <div>
                         <span class="font-semibold">Status:</span>
                         <div>
-                            <span class="px-2 py-1 rounded text-xs {{ $job->is_active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
-                                {{ $job->is_active ? 'Active' : 'Inactive' }}
+                            <span class="px-2 py-1 rounded text-xs {{ $job->status ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
+                                {{ $job->status ? 'Active' : 'Inactive' }}
                             </span>
                         </div>
                     </div>

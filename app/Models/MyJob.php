@@ -10,6 +10,8 @@ class MyJob extends Model
     'employer_id',
     'job_category',
     'job_title',
+    'company_name',
+    'status',
     'job_description',
     'key_responsibilities',
     'skill_requirement',

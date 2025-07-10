@@ -24,8 +24,10 @@
                         <th>Title</th>
                         <th>Category</th>
                         <th>Salary</th>
+                        <th>Company Name</th>
                         <th>Created By</th>
                         <th>Posted At</th>
+                        <th>Status</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -35,9 +37,17 @@
                         <td>{{ $job->job_title }}</td>
                         <td>{{ $job->job_category }}</td>
                         <td>{{ $job->salary ?? 'N/A' }}</td>
+                        <td>{{ $job->company_name }}</td>
+
                         <td>{{ $job->created_by_name ?? 'Unknown' }} (ID: {{ $job->created_by_id ?? 'N/A' }})</td>
                         <td>{{ $job->created_at->format('F j, Y') }}</td>
-
+                          <td>
+                            @if($job->status == 'active')
+                            <span class="badge bg-success">Active</span>
+                            @else
+                            <span class="badge bg-secondary">Inactive</span>
+                            @endif
+                        </td>
                         <td>
                             @role('Candidate')
                             <a href="{{ route('jobs.show', $job->id) }}" class="btn btn-info btn-sm me-1">View</a>
@@ -50,7 +60,7 @@
                                 <button type="submit" class="btn btn-danger btn-sm me-1">Delete</button>
                                 @endcan
                             </form>
-                            
+
                             @can('edit jobs')
                             <a href="{{ route('jobs.edit', $job->id) }}" class="btn btn-warning btn-sm me-1">Edit</a>
                             @endcan

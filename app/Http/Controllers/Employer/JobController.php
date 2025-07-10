@@ -11,28 +11,25 @@ use function Pest\Laravel\get;
 
 class JobController extends Controller
 {
-   public function index()
-{
-    $user = auth()->user();
+    public function index()
+    {
+        $user = auth()->user();
 
-    if ($user->hasRole('Super Admin')) {
+        if ($user->hasRole('Super Admin')) {
 
-        $jobs = MyJob::latest()->get();
+            $jobs = MyJob::latest()->get();
+        } elseif ($user->hasRole('Employer')) {
+
+            $jobs = MyJob::where('created_by_id', $user->id)->latest()->get();
+        } elseif ($user->hasRole('Candidate')) {
+
+            $jobs = MyJob::latest()->get();  //  Candidate sees all jobs
+        } else {
+            abort(403);
+        }
+
+        return view('employer.jobs.list', compact('jobs'));
     }
-     elseif ($user->hasRole('Employer')) {
-
-        $jobs = MyJob::where('created_by_id', $user->id)->latest()->get();
-    } 
-    elseif ($user->hasRole('Candidate')) {
-
-        $jobs = MyJob::latest()->get();  //  Candidate sees all jobs
-    } 
-    else {
-        abort(403);
-    }
-
-    return view('employer.jobs.list', compact('jobs'));
-}
 
 
     public function create()
@@ -54,6 +51,8 @@ class JobController extends Controller
 
                 'job_category' => $request->job_category,
                 'job_title' => $request->job_title,
+                'company_name' => $request->company_name,
+                'status' => $request->status,
                 'job_description' => $request->job_description,
                 'key_responsibilities' => $request->key_responsibilities,
                 'skill_requirement' => $request->skill_requirement,
@@ -110,6 +109,8 @@ class JobController extends Controller
 
             $job->job_category = $request->job_category;
             $job->job_title = $request->job_title;
+            $job->company_name = $request->company_name;
+            $job->status = $request->status;
             $job->job_description = $request->job_description;
             $job->key_responsibilities = $request->key_responsibilities;
             $job->skill_requirement = $request->skill_requirement;
