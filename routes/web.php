@@ -70,10 +70,12 @@ Route::middleware('auth')->group(function () {
     Route::put('/jobs/{id}', [JobController::class, 'update'])->name('jobs.update');
     Route::delete('/jobs/{id}', [JobController::class, 'destroy'])->name('jobs.destroy');
 
+    //showing jobslist by category
+    Route::get('/jobs/category/{category}', [JobController::class, 'filterByCategory'])->name('jobs.category');
 
-    //route for view job -candidate
-    Route::get('/jobs/{id}', [JobController::class, 'show'])->name('jobs.show');
     
+    //route for candidate
+    Route::get('/jobs/{id}', [JobController::class, 'show'])->name('jobs.show');
 });
 
 

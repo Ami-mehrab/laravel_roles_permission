@@ -1,3 +1,4 @@
+<x-app-layout>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,11 +24,7 @@
 
         <form action="{{ route('jobs.store') }}" method="POST">
             @csrf
-            <!-- Company Name -->
-            <div class="mb-3">
-                <label class="form-label">Company Name</label>
-                <input type="text" name="company_name" class="form-control" required value="{{ old('company_name') }}">
-            </div>
+           
             <div class="mb-3">
                 <label class="form-label">Job Category</label>
                 <input type="text" name="job_category" class="form-control" required value="{{ old('job_category') }}">
@@ -36,6 +33,11 @@
             <div class="mb-3">
                 <label class="form-label">Job Title</label>
                 <input type="text" name="job_title" class="form-control" required value="{{ old('job_title') }}">
+            </div>
+             <!-- Company Name -->
+             <div class="mb-3">
+                <label class="form-label">Company Name</label>
+                <input type="text" name="company_name" class="form-control" required value="{{ old('company_name') }}">
             </div>
 
             <div class="mb-3">
@@ -95,3 +97,4 @@
 </body>
 
 </html>
+</x-app-layout>

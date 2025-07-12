@@ -24,11 +24,7 @@
         <form action="{{ route('jobs.update', $jobs->id) }}" method="POST">
             @csrf
             @method('PUT')
-            <!-- Company Name -->
-            <div class="mb-3">
-                <label class="form-label">Company Name</label>
-                <input type="text" name="company_name" class="form-control" required value="{{ old('company_name',$jobs->company_name) }}">
-            </div>
+      
 
             <div class="mb-3">
                 <label class="form-label">Job Category</label>
@@ -38,6 +34,11 @@
             <div class="mb-3">
                 <label class="form-label">Job Title</label>
                 <input type="text" name="job_title" class="form-control" required value="{{ old('job_title', $jobs->job_title) }}">
+            </div>
+                  <!-- Company Name -->
+                  <div class="mb-3">
+                <label class="form-label">Company Name</label>
+                <input type="text" name="company_name" class="form-control" required value="{{ old('company_name',$jobs->company_name) }}">
             </div>
 
             <div class="mb-3">

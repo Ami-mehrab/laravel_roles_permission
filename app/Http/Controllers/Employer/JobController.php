@@ -15,7 +15,8 @@ class JobController extends Controller
     {
         $user = auth()->user();
 
-        if ($user->hasRole('Super Admin')) {
+        if ($user->hasRole('super-admin')) {
+        
 
             $jobs = MyJob::latest()->get();
         } elseif ($user->hasRole('Employer')) {
@@ -136,4 +137,23 @@ class JobController extends Controller
 
         return redirect()->route('jobs.index')->with('success', 'Job deleted successfully.');
     }
+
+
+    public function filterByCategory($category)
+{
+    $user = auth()->user();
+
+    if ($user->hasRole('super-admin') || $user->hasRole('Candidate')) {
+        $jobs = MyJob::where('job_category', $category)->latest()->get();
+    } elseif ($user->hasRole('Employer')) {
+        $jobs = MyJob::where('job_category', $category)
+            ->where('created_by_id', $user->id)
+            ->latest()->get();
+    } else {
+        abort(403);
+    }
+
+    return view('employer.jobs.list', compact('jobs', 'category'));
+}
+
 }

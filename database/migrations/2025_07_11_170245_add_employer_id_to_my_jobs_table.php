@@ -9,18 +9,21 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
         Schema::table('my_jobs', function (Blueprint $table) {
-            $table->string('company_name')->nullable()->after('job_title');
-            $table->enum('status', ['active', 'inactive'])->default('inactive')->after('company_name');
+            $table->unsignedBigInteger('employer_id')->nullable();
+    
+            // Optional: If you want to enforce foreign key constraint
+            // $table->foreign('employer_id')->references('id')->on('employers')->onDelete('cascade');
         });
     }
-
-    public function down(): void
+    
+    public function down()
     {
         Schema::table('my_jobs', function (Blueprint $table) {
-            $table->dropColumn(['company_name', 'status']);
+            $table->dropColumn('employer_id');
         });
     }
+    
 };
