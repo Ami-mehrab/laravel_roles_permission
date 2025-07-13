@@ -10,6 +10,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
+    
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, HasRoles;
     /**
@@ -45,4 +46,14 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    //applied jobs
+public function appliedJobs()
+{
+    return $this->belongsToMany(MyJob::class, 'job_applications', 'user_id', 'job_id')
+        ->withPivot(['applicant_name', 'applicant_email', 'resume_path'])
+        ->withTimestamps();
+}
+
+
 }

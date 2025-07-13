@@ -45,6 +45,7 @@
 
         <!-- end of cat part -->
 
+
         <div class="table-responsive">
             <table class="table table-bordered table-striped">
                 <thead class="table-light">
@@ -61,6 +62,7 @@
                 </thead>
                 <tbody>
                     @foreach ($jobs as $job)
+
                     <tr>
                         <td>{{ $job->job_title }}</td>
                         <td>{{ $job->job_category }}</td>
@@ -77,7 +79,7 @@
                         </td>
                         <td>
                             @role('Candidate')
-                           <a href="{{ route('jobs.show', $job->id) }}" class="btn btn-info btn-sm me-1">View</a>
+                            <a href="{{ route('jobs.show', $job->id) }}" class="btn btn-info btn-sm me-1">View</a>
                             @endrole
                             <form action="{{ route('jobs.destroy', $job->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this job?');">
                                 @csrf
@@ -91,6 +93,10 @@
                             @can('edit jobs')
                             <a href="{{ route('jobs.edit', $job->id) }}" class="btn btn-warning btn-sm me-1">Edit</a>
                             @endcan
+                            @role('Employer|super-admin')
+                            <a href="{{ route('jobs.applications', $job->id) }}" class="btn btn-success">Applied jobs</a>
+                            @endrole
+
                     </tr>
                     @endforeach
 
@@ -101,6 +107,7 @@
                         </td>
                     </tr>
                     @endif
+
                 </tbody>
             </table>
         </div>

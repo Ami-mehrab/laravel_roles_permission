@@ -20,6 +20,9 @@ class DatabaseSeeder extends Seeder
 
             //  Job permissions
             'view jobs', 'create jobs', 'edit jobs', 'delete jobs',
+
+            //
+            'view applications',
         ];
  
         // Create permissions

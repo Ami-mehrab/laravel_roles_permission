@@ -16,7 +16,7 @@ class JobController extends Controller
         $user = auth()->user();
 
         if ($user->hasRole('super-admin')) {
-        
+
 
             $jobs = MyJob::latest()->get();
         } elseif ($user->hasRole('Employer')) {
@@ -71,18 +71,18 @@ class JobController extends Controller
         return redirect()->route('jobs.create')->withErrors($validation)->withInput();
     }
 
-   public function show(string $id)
-{
-    $user = auth()->user();
+    public function show(string $id)
+    {
+        $user = auth()->user();
 
-    if (!$user || !$user->hasRole('Candidate')) {
-        abort(403, 'Only candidates can view job details.');
+        if (!$user || !$user->hasRole('Candidate')) {
+            abort(403, 'Only candidates can view job details.');
+        }
+
+        $job = MyJob::findOrFail($id);
+
+        return view('candidate.jobs.show', compact('job'));
     }
-
-    $job = MyJob::findOrFail($id);
-
-    return view('candidate.jobs.show', compact('job'));
-}
 
 
     /**
@@ -138,28 +138,24 @@ class JobController extends Controller
 
         return redirect()->route('jobs.index')->with('success', 'Job deleted successfully.');
     }
-
-
     public function filterByCategory(Request $request)
-{
-    $category = $request->query('category');
-    $user = auth()->user();
+    {
+        $category = $request->query('category');
+        $user = auth()->user();
 
-    if ($user->hasRole('super-admin') || $user->hasRole('Candidate')) {
-        $jobs = MyJob::when($category, fn($q) => $q->where('job_category', $category))
-                     ->latest()
-                     ->get();
-    } elseif ($user->hasRole('Employer')) {
-        $jobs = MyJob::when($category, fn($q) => $q->where('job_category', $category))
-                     ->where('created_by_id', $user->id)
-                     ->latest()
-                     ->get();
-    } else {
-        abort(403);
+        if ($user->hasRole('super-admin') || $user->hasRole('Candidate')) {
+            $jobs = MyJob::when($category, fn($q) => $q->where('job_category', $category))
+                ->latest()
+                ->get();
+        } elseif ($user->hasRole('Employer')) {
+            $jobs = MyJob::when($category, fn($q) => $q->where('job_category', $category))
+                ->where('created_by_id', $user->id)
+                ->latest()
+                ->get();
+        } else {
+            abort(403);
+        }
+
+        return view('employer.jobs.list', compact('jobs', 'category'));
     }
-
-    return view('employer.jobs.list', compact('jobs', 'category'));
-}
-
-
 }

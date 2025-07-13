@@ -41,6 +41,11 @@
                         {{ __('Jobs') }}
                     </x-nav-link>
                     @endcan
+                       @role('Candidate')
+                    <x-nav-link :href="route('candidate.applications')" :active="request()->routeIs('candidate.applications')">
+                        {{ __('Applications') }}
+                    </x-nav-link>
+                    @endrole
 
 
 

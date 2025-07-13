@@ -22,4 +22,13 @@ class MyJob extends Model
     'created_by_name',
     'employer_id',
   ];
+
+ public function applicants()
+{
+    return $this->belongsToMany(User::class, 'job_applications', 'job_id', 'user_id')
+        ->withPivot(['applicant_name', 'applicant_email', 'resume_path'])
+        ->withTimestamps();
+}
+
+
 }

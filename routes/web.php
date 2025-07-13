@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\Candidate\JobController as CandidateJobController;
+use App\Http\Controllers\Employer\ApplicationController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
@@ -71,11 +73,18 @@ Route::middleware('auth')->group(function () {
     Route::delete('/jobs/{id}', [JobController::class, 'destroy'])->name('jobs.destroy');
 
     //showing jobslist by category
-   Route::get('/jobs/category', [JobController::class, 'filterByCategory'])->name('jobs.category');
+    Route::get('/jobs/category', [JobController::class, 'filterByCategory'])->name('jobs.category');
 
-    
+
     //route for candidate
-  Route::get('/jobs/{id}', [JobController::class, 'show'])->name('jobs.show');
+    Route::get('/jobs/{id}', [JobController::class, 'show'])->name('jobs.show');
+
+    Route::get('/jobs/{id}/apply', [CandidateJobController::class, 'showApplyForm'])->name('jobs.apply.start');
+    Route::post('/jobs/{id}/submit-application', [CandidateJobController::class, 'submitApplication'])->name('jobs.apply.submit');
+
+    Route::get('/candidate/dashboard', [CandidateJobController::class, 'myApplications'])->name('candidate.applications');
+    Route::get('/jobs/{id}/applications', [ApplicationController::class, 'index'])->name('jobs.applications');
+
 });
 
 
