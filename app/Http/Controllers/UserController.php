@@ -163,6 +163,7 @@ class UserController extends Controller
 
     $users = $query->paginate(10)->withQueryString();
 
+    $allRoles =Role::all();
     return view('users.list', compact('users', 'allRoles'));
 }
 

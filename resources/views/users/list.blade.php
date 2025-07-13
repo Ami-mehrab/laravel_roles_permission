@@ -50,7 +50,7 @@
                         @else
                         <input type="text" class="form-control" placeholder="No roles found" disabled>
                         @endif
-                        
+
                     </div>
                     <div class="col-md-3">
                         <button type="submit" class="btn btn-primary">Search</button>
@@ -58,6 +58,9 @@
                     </div>
                 </form>
             </div>
+            <!-- End of search field -->
+
+
             <h2 class="mb-4 text-center">Listing</h2>
             <table class="table table-bordered table-striped">
                 <thead class="table-dark">

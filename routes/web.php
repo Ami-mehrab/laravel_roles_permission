@@ -76,13 +76,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/jobs/category', [JobController::class, 'filterByCategory'])->name('jobs.category');
 
 
-    //route for candidate
+    //Route for candidate
     Route::get('/jobs/{id}', [JobController::class, 'show'])->name('jobs.show');
 
     Route::get('/jobs/{id}/apply', [CandidateJobController::class, 'showApplyForm'])->name('jobs.apply.start');
     Route::post('/jobs/{id}/submit-application', [CandidateJobController::class, 'submitApplication'])->name('jobs.apply.submit');
-
     Route::get('/candidate/dashboard', [CandidateJobController::class, 'myApplications'])->name('candidate.applications');
+
+    //Route for viewing applied jobs
     Route::get('/jobs/{id}/applications', [ApplicationController::class, 'index'])->name('jobs.applications');
 
 });

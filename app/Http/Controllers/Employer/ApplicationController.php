@@ -11,7 +11,7 @@ class ApplicationController extends Controller
      public function index($id)
     {
         $job = MyJob::with('applicants')->findOrFail($id);
-        $user = auth()->user();
+    
 
         // Access Control
         // if ($user->hasRole('Employer') && $job->created_by_id !== $user->id) {
