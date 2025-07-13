@@ -71,11 +71,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/jobs/{id}', [JobController::class, 'destroy'])->name('jobs.destroy');
 
     //showing jobslist by category
-    Route::get('/jobs/category/{category}', [JobController::class, 'filterByCategory'])->name('jobs.category');
+   Route::get('/jobs/category', [JobController::class, 'filterByCategory'])->name('jobs.category');
 
     
     //route for candidate
-    Route::get('/jobs/{id}', [JobController::class, 'show'])->name('jobs.show');
+  Route::get('/jobs/{id}', [JobController::class, 'show'])->name('jobs.show');
 });
 
 

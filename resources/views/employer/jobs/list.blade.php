@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,22 +23,26 @@
         <a href="{{ route('jobs.create') }}" class="btn btn-success mb-3">+ New Job Post</a>
         @endcan
 
-        <!-- filter by cat -->
+        <!-- Filter by Category  -->
         <div class="mb-4">
-            <h5>Filter by Category:</h5>
             @php
             $categories = \App\Models\MyJob::select('job_category')->distinct()->pluck('job_category');
             @endphp
 
-            @foreach ($categories as $cat)
-            <a href="{{ route('jobs.category', $cat) }}"
-                class="btn btn-outline-primary btn-sm me-1 {{ (isset($category) && $category == $cat) ? 'active' : '' }}">
-                {{ ucfirst($cat) }}
-            </a>
-            @endforeach
-
-            <a href="{{ route('jobs.index') }}" class="btn btn-outline-secondary btn-sm">All Jobs</a>
+            <form action="{{ route('jobs.category', '') }}" method="GET" class="d-flex align-items-center gap-2">
+                <label for="categoryDropdown" class="form-label me-2">Filter by Category:</label>
+                <select name="category" id="categoryDropdown" class="form-select me-2" onchange="this.form.submit()" style="width: 250px;">
+                    <option value="">All Jobs</option>
+                    @foreach ($categories as $cat)
+                    <option value="{{ $cat }}" {{ (isset($category) && $category == $cat) ? 'selected' : '' }}>
+                        {{ ucfirst($cat) }}
+                    </option>
+                    @endforeach
+                </select>
+                <noscript><button type="submit" class="btn btn-primary btn-sm">Filter</button></noscript>
+            </form>
         </div>
+
         <!-- end of cat part -->
 
         <div class="table-responsive">
@@ -74,8 +76,8 @@
                             @endif
                         </td>
                         <td>
-                            @role('candidate')
-                            <a href="{{ route('jobs.show', $job->id) }}" class="btn btn-info btn-sm me-1">View</a>
+                            @role('Candidate')
+                           <a href="{{ route('jobs.show', $job->id) }}" class="btn btn-info btn-sm me-1">View</a>
                             @endrole
                             <form action="{{ route('jobs.destroy', $job->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this job?');">
                                 @csrf
