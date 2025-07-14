@@ -18,6 +18,10 @@ class JobController extends Controller
         if (!$user->hasRole('Candidate')) {
             abort(403, 'Only candidates can apply.');
         }
+        //if status inactive apply button is invisible in the show.blade 
+        if ($job->status === 'inactive') {
+            return redirect()->back()->with('error', 'This job is no longer accepting applications.');
+        }
 
         return view('candidate.jobs.apply_form', compact('job'));
     }
@@ -29,7 +33,12 @@ class JobController extends Controller
             abort(403, 'Only candidates can apply.');
         }
 
+
         $job = MyJob::findOrFail($id);
+
+        if ($job->status === 'inactive') {
+            return redirect()->back()->with('error', 'This job is no longer accepting applications.');
+        }
 
         // Allow applying to different jobs, but not the same one twice
         $alreadyApplied = $job->applicants()->where('user_id', $user->id)->exists();
@@ -52,6 +61,7 @@ class JobController extends Controller
             'resume_path' => $resumePath,
             'created_at' => now(),
             'updated_at' => now(),
+
         ]);
 
         return redirect()->route('candidate.jobs.dashboard', $job->id)
@@ -61,16 +71,15 @@ class JobController extends Controller
     // showing applied jobs
 
     public function myApplications()
-{
-    $user = auth()->user();
+    {
+        $user = auth()->user();
 
-    if (!$user->hasRole('Candidate')) {
-        abort(403);
+        if (!$user->hasRole('Candidate')) {
+            abort(403);
+        }
+
+        $appliedJobs = $user->appliedJobs()->latest()->get();
+
+        return view('candidate.jobs.dashboard', compact('appliedJobs'));
     }
-
-    $appliedJobs = $user->appliedJobs()->latest()->get();
-
-    return view('candidate.jobs.dashboard', compact('appliedJobs'));
-}
-
 }

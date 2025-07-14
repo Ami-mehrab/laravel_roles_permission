@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('my_jobs', function (Blueprint $table) {
-            $table->string('company_name')->nullable()->after('job_title');
-            $table->enum('status', ['active', 'inactive'])->default('inactive')->after('company_name');
+         $table->string('company_name')->nullable()->after('job_title');
+         $table->enum('status', ['active', 'inactive'])->default('active')->after('company_name');
         });
     }
 

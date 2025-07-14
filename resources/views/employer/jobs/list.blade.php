@@ -93,9 +93,9 @@
                             @can('edit jobs')
                             <a href="{{ route('jobs.edit', $job->id) }}" class="btn btn-warning btn-sm me-1">Edit</a>
                             @endcan
-                            
+
                             @role('Employer|super-admin')
-                            <a href="{{ route('jobs.applications', $job->id) }}" class="btn btn-success">Applied jobs</a>
+                            <a href="{{ route('jobs.applications', $job->id) }}" class="btn btn-success">Applicants</a>
                             @endrole
 
                     </tr>

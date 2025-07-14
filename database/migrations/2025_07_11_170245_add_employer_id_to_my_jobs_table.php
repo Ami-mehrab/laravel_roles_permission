@@ -14,8 +14,7 @@ return new class extends Migration
         Schema::table('my_jobs', function (Blueprint $table) {
             $table->unsignedBigInteger('employer_id')->nullable();
     
-            // Optional: If you want to enforce foreign key constraint
-            // $table->foreign('employer_id')->references('id')->on('employers')->onDelete('cascade');
+           
         });
     }
     

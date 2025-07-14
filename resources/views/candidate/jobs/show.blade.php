@@ -77,11 +77,13 @@
                     <div>
                         <span class="font-semibold">Status:</span>
                         <div>
-                            <span class="px-2 py-1 rounded text-xs {{ $job->status ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
-                                {{ $job->status ? 'Active' : 'Inactive' }}
+                            <span class="px-2 py-1 rounded text-xs 
+            {{ $job->status === 'active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
+                                {{ ucfirst($job->status) }}
                             </span>
                         </div>
                     </div>
+
 
                     <div>
                         <span class="font-semibold">Posted At:</span>
@@ -100,6 +102,9 @@
 
                     @role('Candidate')
                     <div class="mt-6 flex justify-end">
+                        @if ($job->status === 'inactive')
+                        <div class="text-red-600 font-semibold mb-4">This job is inactive. Applications are closed.</div>
+                        @else
                         <form action="{{ route('jobs.apply.start', $job->id) }}" method="GET">
                             @csrf
                             <button type="submit" class="px-6 py-2 bg-green-600 text-white font-semibold rounded-lg shadow hover:bg-green-700 transition">
@@ -107,6 +112,7 @@
                             </button>
                         </form>
                     </div>
+                    @endif
                     @endrole
 
 
