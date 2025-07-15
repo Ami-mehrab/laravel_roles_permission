@@ -13,10 +13,7 @@ class ApplicationController extends Controller
         $job = MyJob::with('applicants')->findOrFail($id);
     
 
-        // Access Control
-        // if ($user->hasRole('Employer') && $job->created_by_id !== $user->id) {
-        //     abort(403, 'You do not own this job.');
-        // }
+       
 
         return view('employer.jobs.application', compact('job'));
     }

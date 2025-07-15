@@ -64,7 +64,7 @@ class JobController extends Controller
 
         ]);
 
-        return redirect()->route('candidate.jobs.dashboard', $job->id)
+        return redirect()->route('candidate.applications', $job->id)
             ->with('success', 'Application submitted successfully!');
     }
 
