@@ -29,6 +29,11 @@ class MyJob extends Model
         ->withPivot(['applicant_name', 'applicant_email', 'resume_path'])
         ->withTimestamps();
 }
+public function employer()
+{
+    return $this->belongsTo(User::class, 'employer_id');
+}
+
 
 
 }

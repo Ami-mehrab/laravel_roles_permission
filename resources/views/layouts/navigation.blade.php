@@ -25,11 +25,11 @@
                         {{ __('Roles') }}
                     </x-nav-link>
                     @endcan
-                    @can('view articles')
+                    <!-- @can('view articles')
                     <x-nav-link :href="route('articles.index')" :active="request()->routeIs('articles.index')">
                         {{ __('Articles') }}
                     </x-nav-link>
-                    @endcan
+                    @endcan -->
 
                     @can('view users')
                     <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
